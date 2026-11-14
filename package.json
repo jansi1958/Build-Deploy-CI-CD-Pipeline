@@ -1,13 +1,13 @@
 {
   "name": "cicd-pipeline-project",
   "version": "1.0.0",
-  "description": "Real-time CI/CD Pipeline Project",
+  "description": "Runnable Node.js application demonstrating a CI/CD pipeline",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "echo \"Tests Passed\""
+    "test": "node --test"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.21.2"
   }
 }
