@@ -2,10 +2,11 @@ pipeline {
     agent any
 
     stages {
-
-        stage('Clone Repository') {
+        stage('Checkout') {
             steps {
-                git 'https://github.com/your-username/cicd-pipeline-project.git'
+                // Configure this Jenkins Pipeline job as "Pipeline script from SCM".
+                // Jenkins then checks out the repository containing this Jenkinsfile.
+                checkout scm
             }
         }
 
@@ -23,14 +24,15 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t cicd-pipeline-project .'
+                sh 'docker build -t cicd-pipeline-project:${BUILD_NUMBER} .'
+                sh 'docker tag cicd-pipeline-project:${BUILD_NUMBER} cicd-pipeline-project:latest'
             }
         }
+    }
 
-        stage('Deploy') {
-            steps {
-                echo 'Deployment Successful'
-            }
+    post {
+        always {
+            echo 'CI pipeline finished. Check the stage results above.'
         }
     }
 }
