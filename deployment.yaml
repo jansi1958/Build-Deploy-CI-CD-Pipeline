@@ -13,7 +13,21 @@ spec:
         app: cicd-app
     spec:
       containers:
-      - name: cicd-container
-        image: cicd-pipeline-project
-        ports:
-        - containerPort: 3000
+        - name: cicd-container
+          image: cicd-pipeline-project:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 3000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 20
